@@ -1,3 +1,6 @@
+% Author: Luis Badesa
+
+%%
 clear all
 close all
 clc
