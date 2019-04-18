@@ -7,12 +7,12 @@ clc
 
 %% Inputs
 P_Loss_max = 1.8e3;
-[P_Deloaded,EFR] = meshgrid(0:10:400,0:10:200);
+[P_Deloaded,EFR] = meshgrid(0:10:400,0:10:400);
 
 D = 0.5e-2;
 P_D = 45e3;
 
-number_planes = 15;
+number_planes = 2;
 
 %% Error check
 P_Deload_range = [0 P_Deloaded(end)];
@@ -115,6 +115,20 @@ for i=1:number_planes
         InputFile_Constants_plane{i}(2)*EFR +...
         InputFile_Constants_plane{i}(3);
 end
+
+% % FOR JUST ONE OVERESTIMATING PLANE: uncomment the next lines of code and
+% % set a breakpoint after them.
+% %
+% % (this is based on getting the cross product of 2 vectors defining the plane)
+% NORMAL_VECTOR = cross([-P_Deloaded(end)*1e-3,-EFR(end)*1e-3,...
+%     ((P_Loss_max)^2*10/(4*0.8)-(P_Loss_max-P_Deloaded(end)-EFR(end))^2*10/(4*0.8))*1e-6],...
+%     [-1/2,1/2,0]);
+% surf(P_Deloaded,EFR,NORMAL_VECTOR(1)*(P_Deloaded+EFR)*1e-3/(-NORMAL_VECTOR(3))...
+%     + (P_Loss_max)^2*10/(4*0.8)*1e-6 )
+% a_vector=NORMAL_VECTOR(1)/(-NORMAL_VECTOR(3));
+% b_vector=NORMAL_VECTOR(2)/(-NORMAL_VECTOR(3));
+% c_vector=(P_Loss_max)^2*10/(4*0.8)*1e-6;
+
 
 % First plot the theoretical solution:
 Z_theoretical = (P_Loss_max-P_Deloaded-EFR).^2*(10/(4*0.8));
